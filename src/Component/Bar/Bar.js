@@ -6,7 +6,7 @@ import React from 'react';
 const Bar = (props) => {
     return (
         <BarContainer className={props.item.id === props.selected ? 'selected' : 'unselect'}>
-            <Label className="label" pos={props.item.value - 7} >{props.item.value} %</Label>
+            <Label className="label" pos={props.item.value - 10} >{props.item.value} %</Label>
             <LinearProgress variant="determinate" value={props.item.value} className="progress-bar" />
         </BarContainer>
     )
@@ -21,7 +21,7 @@ const Label = styled('div')`
     top: 0;
     /* right: 0;
     margin: auto; */
-    left: ${props => props.pos < 0 ? props.pos + 5 : props.pos}%;
+    left: ${props => props.pos < 0 ? props.pos + 10 : props.pos}%;
     width: 80px;
     padding: 5px;
     text-align: center;
