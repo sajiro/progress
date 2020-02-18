@@ -1,49 +1,41 @@
 
-import React, { /* useState, */ useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Component from './Component/Component'
 import Button from '@material-ui/core/Button';
 import Store from './Store'
-/* import React, { useState, useEffect } from 'react'; */
-/* 
-const {observable, computed, autorun, toJS} = mobx; */
-
+import styled from 'styled-components'
 
 function App() {
 
   const { fetchData } = Store.actions
 
   useEffect(() => {
-    console.log('popoka');
     fetchData();
   });
 
-/*   useEffect(() => {
-    function handleStatusChange(status) {
-      setIsOnline(status.isOnline);
-    }
-  
-    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
-    return () => {
-      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
-    };
-  }, [props.friend.id]); 
- */
   const refresh = (param) => {
-      console.log('clickme' + param);
       fetchData();
-      /* Store.actions.fetchData();
-      console.log(Store.ob.progData); */
   }
   return (
-    <div className="App">
-      <header className="App-header">
-        Progress Bars Demo 
-      </header>
+    <AppStyle>
+      <Button className="btns" variant="contained" color="primary" onClick = {() => refresh()} >Fetch New Data</Button>
       <Component />
-     
-      <Button variant="contained" color="primary" onClick = {() => refresh()}>Refresh</Button>
-    </div>
+    </AppStyle>
   );
 }
 
 export default App;
+
+const AppStyle = styled('div')`
+    .btns{
+      margin:10px;
+       border-radius: 30px;
+       padding: 10px 40px;
+       background: #FF6614;
+       &:hover{
+        background: #f5864b;
+        
+       }
+    }
+  
+`

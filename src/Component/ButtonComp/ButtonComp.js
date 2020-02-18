@@ -1,46 +1,50 @@
 
 import styled from 'styled-components'
-import LinearProgress from '@material-ui/core/LinearProgress';
-import React, { /* useState, */ useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import Store from '../../Store'
-const  ButtonComp = (props) => {
-     
-/*      useEffect(() => {
-        console.log('popoka');
-        console.log(props);
-      });
- */
-      const triggerBtn = (param) => {
-        console.log(param + '---' + Store.ob.max * (param / 100)) ;
+import Snackbar from '@material-ui/core/Snackbar';
 
-        Store.ob.bars[Store.ob.selected].value = Store.ob.bars[Store.ob.selected].value +  param;
+
+const ButtonComp = (props) => {
+    const [status, setStatus] = React.useState(`Listening to Progress Bar ${Store.ob.selected + 1}`);
+
+    useEffect(() => {
+        _setStatus();
+    });
+
+    const _setStatus = () => {
+        if (Store.ob.bars[Store.ob.selected].value >= 100) {
+            setStatus(`Progress Bar ${Store.ob.selected + 1} maximum number reached!`);
+        } else if (Store.ob.bars[Store.ob.selected].value <= 0) {
+            setStatus(`Progress Bar ${Store.ob.selected + 1} minimum number reached!`);
+        } else {
+            setStatus(`Listening to Progress Bar ${Store.ob.selected + 1}`);
+        }
+    }
+
+    const setLabel = (param) => {
+        if (param > 0)
+            return '+' + param;
+        else
+            return param;
+    }
+
+
+    const triggerBtn = (param) => {
+        Store.ob.bars[Store.ob.selected].value = Store.ob.bars[Store.ob.selected].value + param;
         if (Store.ob.bars[Store.ob.selected].value > 100) {
             Store.ob.bars[Store.ob.selected].value = 100;
         }
-        if (Store.ob.bars[Store.ob.selected].value < 0){
-            console.log('---gugugugugugu');
+        if (Store.ob.bars[Store.ob.selected].value < 0) {
             Store.ob.bars[Store.ob.selected].value = 0;
         }
-        /* else{
-            Store.ob.bars[Store.ob.selected].value = 0;
-        } */
-
-        if (param > 0) {
-            console.log('------------');
-            // Do Something
-        }else{
-            console.log('++++++++++++');
-        }
-
-
-        /* Store.actions.fetchData();
-        console.log(Store.ob.progData); */
     }
 
-    return(
+    return (
         <ButtonContainer>
-            <Button variant="contained" color="primary" className="btns" onClick = {() => triggerBtn(props.item)} >{props.item}</Button>
+            <Button variant="contained" color="primary" className="btns" onClick={() => triggerBtn(props.item)} >{setLabel(props.item)}</Button>
+            <Snackbar open={true} message={status} />
         </ButtonContainer>
     )
 }
@@ -48,6 +52,9 @@ const  ButtonComp = (props) => {
 export default ButtonComp
 
 const ButtonContainer = styled('div')`
-
+    .btns{
+       border-radius: 30px;
+       padding: 10px 40px;
+    }
   
 `

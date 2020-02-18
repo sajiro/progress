@@ -1,20 +1,13 @@
 
 import styled from 'styled-components'
 import LinearProgress from '@material-ui/core/LinearProgress';
-import React, { /* useState, */ useEffect } from 'react';
-import Store from '../../Store'
-const  Bar = (props) => {/* 
-     
-     useEffect(() => {
-        console.log('popoka');
-        console.log(props);
-      });
- */
+import React from 'react';
 
-    return(
-        <BarContainer>
-            <Label className="label" pos={props.item.value - 5} >{props.item.value} %</Label>
-            <LinearProgress variant="determinate" value={props.item.value}  className="progress-bar" />
+const Bar = (props) => {
+    return (
+        <BarContainer className={props.item.id === props.selected ? 'selected' : 'unselect'}>
+            <Label className="label" pos={props.item.value - 7} >{props.item.value} %</Label>
+            <LinearProgress variant="determinate" value={props.item.value} className="progress-bar" />
         </BarContainer>
     )
 }
@@ -28,7 +21,7 @@ const Label = styled('div')`
     top: 0;
     /* right: 0;
     margin: auto; */
-    left: ${props => props.pos}%;
+    left: ${props => props.pos < 0 ? props.pos + 5 : props.pos}%;
     width: 80px;
     padding: 5px;
     text-align: center;
@@ -37,7 +30,19 @@ const Label = styled('div')`
 const BarContainer = styled('div')`
     position: relative;
     margin: 20px 0;
+    &.selected{
+        border:2px solid #a1d404;
+    }
+    &.unselect{
+        border:2px solid #F3F3F3;
+    }
     .progress-bar{
         height:30px;
+    }
+    .MuiLinearProgress-bar{
+        background:#FF6614;
+    }
+    .MuiLinearProgress-root{
+        background:#fbe1d3;
     }
 `
