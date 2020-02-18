@@ -6,8 +6,8 @@ import React from 'react';
 const Bar = (props) => {
     return (
         <BarContainer className={props.item.id === props.selected ? 'selected' : 'unselect'}>
-            <Label className="label" pos={props.item.value - 10} >{props.item.value} %</Label>
-            <LinearProgress variant="determinate" value={props.item.value} className="progress-bar" />
+            <Label className="label" pos={props.item.value - 10}>{props.item.value} %</Label>
+            <LinearProgress variant="determinate" value={props.item.value} className={props.item.value === 100 ? 'max progress-bar' : 'progress-bar' }  />
         </BarContainer>
     )
 }
@@ -38,6 +38,11 @@ const BarContainer = styled('div')`
     }
     .progress-bar{
         height:30px;
+        &.max{
+            .MuiLinearProgress-bar{
+                background:red;
+            }
+        }
     }
     .MuiLinearProgress-bar{
         background:#FF6614;
